@@ -16,6 +16,8 @@ const slides = [
 		"tagLine":"Autocollants <span>avec découpe laser sur mesure</span>"
 	}
 ]
+console.log(slides.length);
+
 /* Ajout Event "click" */
 const left = document.getElementById("btn-left").addEventListener("click", function() {
 	console.log("Gauche");
@@ -24,3 +26,4 @@ const left = document.getElementById("btn-left").addEventListener("click", funct
 const right = document.getElementById("btn-right").addEventListener("click", function() {
 	console.log("Droite");
 });
+
