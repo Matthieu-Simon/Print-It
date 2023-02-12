@@ -21,8 +21,10 @@ const slides = [
 const banner = document.getElementById('#banner');
 const arrowLeft = document.querySelector('.arrow_left');
 const arrowRight = document.querySelector('.arrow_right');
+const bannerImage = document.querySelector('#banner > img');
+const bannerText = document.querySelector('#banner > p');
 
-// On compte le nombre d'éléments du tableau slides
+// On crée une variable avec le nombre d'éléments du tableau slides
 const numberOfSlide = slides.length;
 
 let count = 0;
@@ -33,6 +35,12 @@ arrowLeft.addEventListener('click', () => {
 });
 arrowRight.addEventListener('click', () => {
 	console.log("Droite");
+	if (count == numberOfSlide - 1) {
+		count = 0;
+	} else {
+		count++;
+	}
+	changeSlide();
 });
 
 // Fonction pour créer les bullets
@@ -46,7 +54,29 @@ function createBullet() {
 		dot.classList.add('dot');
 		// on ajoute les éléments "dot" dans le parent dots
 		dots.appendChild(dot);
+		// condition pour ajouter la class dot_selected
+		if (i == 0) { 
+			dots.children[i].classList.add('dot_selected');
+		}
 	}
 }
 // on appelle la fonction
 createBullet();
+
+// Lier le bullet à une image 
+function bulletSelected () {
+	const dot = document.getElementsByClassName('dot');
+	for (let i = 0; i < dot.length; i++) {
+		dot[count].classList.remove('dot_selected');
+	}
+	dot[count].classList.add('dot_selected');
+}
+
+// Changer le contenu img et text de la bannière
+function changeSlide() {
+	bannerImage.src = `./assets/images/slideshow/${slides[count].image}`;
+	bannerText.innerHTML = slides[count].tagLine;
+	// on appelle la fonction pour changer de bullet au changement d'image
+	bulletSelected();
+}
+changeSlide();
