@@ -31,10 +31,14 @@ let count = 0;
 
 // Event au clic
 arrowLeft.addEventListener('click', () => {
-	console.log("Gauche");
+	if (count == 0) {
+		count = numberOfSlide - 1;
+	} else {
+		count--;
+	}
+	changeSlide();
 });
 arrowRight.addEventListener('click', () => {
-	console.log("Droite");
 	if (count == numberOfSlide - 1) {
 		count = 0;
 	} else {
