@@ -26,32 +26,31 @@ const bannerText = document.querySelector('#banner > p');
 
 // On crée une variable avec le nombre d'éléments du tableau slides
 const numberOfSlide = slides.length;
-
-let count = 0;
+let i = 0;
 
 // Event au clic
 arrowLeft.addEventListener('click', () => {
-	if (count == 0) {
-		count = numberOfSlide - 1;
+	if (i == 0) {
+		i = numberOfSlide - 1;
 	} else {
-		count--;
+		i--;
 	}
 	changeSlide();
 });
 arrowRight.addEventListener('click', () => {
-	if (count == numberOfSlide - 1) {
-		count = 0;
+	if (i == numberOfSlide - 1) {
+		i = 0;
 	} else {
-		count++;
+		i++;
 	}
 	changeSlide();
 });
 
 // Fonction pour créer les bullets
-function createBullet() {
+const createBullet = () => {
 	const dots = document.querySelector('.dots');
 	// on boucle sur le tableau slides pour créer le nombre exact de bullets
-	for (let i = 0; i < numberOfSlide; i++) {
+	for (let j = 0; j < numberOfSlide; j++) {
 		// on crée un élément span
 		const dot = document.createElement('span');
 		// on applique le style css "dot"
@@ -59,8 +58,8 @@ function createBullet() {
 		// on ajoute les éléments "dot" dans le parent dots
 		dots.appendChild(dot);
 		// condition pour ajouter la class dot_selected
-		if (i == 0) { 
-			dots.children[i].classList.add('dot_selected');
+		if (j == 0) { 
+			dots.children[j].classList.add('dot_selected');
 		}
 	}
 }
@@ -68,18 +67,18 @@ function createBullet() {
 createBullet();
 
 // Lier le bullet à une image 
-function bulletSelected () {
+const bulletSelected = () => {
 	const dot = document.getElementsByClassName('dot');
 	for (let i = 0; i < dot.length; i++) {
-		dot[count].classList.remove('dot_selected');
+		dot[i].classList.remove('dot_selected');
 	}
-	dot[count].classList.add('dot_selected');
+	dot[i].classList.add('dot_selected');
 }
 
 // Changer le contenu img et text de la bannière
-function changeSlide() {
-	bannerImage.src = `./assets/images/slideshow/${slides[count].image}`;
-	bannerText.innerHTML = slides[count].tagLine;
+const changeSlide = () => {
+	bannerImage.src = `./assets/images/slideshow/${slides[i].image}`;
+	bannerText.innerHTML = slides[i].tagLine;
 	// on appelle la fonction pour changer de bullet au changement d'image
 	bulletSelected();
 }
