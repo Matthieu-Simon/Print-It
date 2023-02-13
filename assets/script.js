@@ -25,32 +25,14 @@ const bannerImage = document.querySelector('#banner > img');
 const bannerText = document.querySelector('#banner > p');
 
 // On crée une variable avec le nombre d'éléments du tableau slides
-const numberOfSlide = slides.length;
-let i = 0;
-
-// Event au clic
-arrowLeft.addEventListener('click', () => {
-	if (i == 0) {
-		i = numberOfSlide - 1;
-	} else {
-		i--;
-	}
-	changeSlide();
-});
-arrowRight.addEventListener('click', () => {
-	if (i == numberOfSlide - 1) {
-		i = 0;
-	} else {
-		i++;
-	}
-	changeSlide();
-});
+const lastSlidesListIndex = slides.length - 1;
+let currentSlideIndex = 0;
 
 // Fonction pour créer les bullets
 const createBullet = () => {
 	const dots = document.querySelector('.dots');
 	// on boucle sur le tableau slides pour créer le nombre exact de bullets
-	for (let j = 0; j < numberOfSlide; j++) {
+	for (let j = 0; j < lastSlidesListIndex + 1; j++) {
 		// on crée un élément span
 		const dot = document.createElement('span');
 		// on applique le style css "dot"
@@ -68,18 +50,33 @@ createBullet();
 
 // Lier le bullet à une image 
 const bulletSelected = () => {
-	const dot = document.getElementsByClassName('dot');
-	for (let i = 0; i < dot.length; i++) {
-		dot[i].classList.remove('dot_selected');
-	}
-	dot[i].classList.add('dot_selected');
+	const currentSelectedDot = document.getElementsByClassName('dot_selected');
+	currentSelectedDot[0].classList.remove('dot_selected');
+	document.getElementsByClassName('dot')[currentSlideIndex].classList.add('dot_selected');
 }
 
 // Changer le contenu img et text de la bannière
 const changeSlide = () => {
-	bannerImage.src = `./assets/images/slideshow/${slides[i].image}`;
-	bannerText.innerHTML = slides[i].tagLine;
+	bannerImage.src = `./assets/images/slideshow/${slides[currentSlideIndex].image}`;
+	bannerText.innerHTML = slides[currentSlideIndex].tagLine;
 	// on appelle la fonction pour changer de bullet au changement d'image
 	bulletSelected();
 }
-changeSlide();
+
+// Event au clic
+arrowLeft.addEventListener('click', () => {
+	if (currentSlideIndex == 0) {
+		currentSlideIndex = lastSlidesListIndex;
+	} else {
+		currentSlideIndex--;
+	}
+	changeSlide();
+});
+arrowRight.addEventListener('click', () => {
+	if (currentSlideIndex == lastSlidesListIndex) {
+		currentSlideIndex = 0;
+	} else {
+		currentSlideIndex++;
+	}
+	changeSlide();
+});
